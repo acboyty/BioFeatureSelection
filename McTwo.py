@@ -33,18 +33,21 @@ def McTwo(FR, C):
     """
     s, k = FR.shape
     curAcc = -1
-    Subset = [-1 for _ in range(k)]
-    numSubset = 0  # [0, numSubset) contains the selected features
+    curSet = set([])
+    leftSet = set([x for x in range(k)])
 
-    curAcc = calAcc(FR[:, 0:1], C)
-    Subset[numSubset] = 0
-    numSubset += 1
-
-    for i in range(1, k):
-        Subset[numSubset] = i
-        tempAcc = calAcc(FR[:, Subset[:numSubset+1]], C)
+    while True:
+        tempAcc, idx = -1, -1
+        for x in leftSet:
+            tmpAcc = calAcc(FR[:, list(curSet) + [x]], C)
+            if tmpAcc > tempAcc:
+                tempAcc = tmpAcc
+                idx = x
         if tempAcc > curAcc:
             curAcc = tempAcc
-            numSubset += 1
-            
-    return FR[:, Subset[:numSubset]]
+            curSet.add(idx)
+            leftSet.remove(idx)
+        else:
+            break
+
+    return FR[:, list(curSet)]

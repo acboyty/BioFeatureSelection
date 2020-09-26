@@ -42,10 +42,8 @@ for data_name in os.listdir(config.DATA_PATH):
     # print(f'features.shape: {features.shape}, label.shape: {label.shape}')
 
     FOne = McOne(features, label, config.r)
-    # print(f'FOne.shape: {FOne.shape}')
-
     FTwo = McTwo(FOne, label)
-    # print(f'FTwo.shape: {FTwo.shape}')
+    print(f'FOne.shape: {FOne.shape}, FTwo.shape: {FTwo.shape}')
 
     mAcc1 = evaluation(FOne, label)
     mAcc2 = evaluation(FTwo, label)
